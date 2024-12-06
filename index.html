@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wahlprogramm 2025</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="libs/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <header>
@@ -25,6 +26,26 @@
     <main>
         <section id="themes" class="card-container">
             <h2>Themen</h2>
+            <div class="card" id="theme-MigrationSecuity">
+                <h3>Migration und Innere Sicherheitk</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Außen- und Sicherheitspolitischen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Migration und Innere Sicherheit')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-foreignSecurity">
+                <h3>Außen- und Sicherheitspolitik</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Außen- und Sicherheitspolitischen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Außen- und Sicherheitspolitik')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-social">
+                <h3>Soziales</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Sozialen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Soziales')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-finances">
+                <h3>Finanzen</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Finanziellen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Finanzen')">Mehr erfahren</button>
+            </div>
             <div class="card" id="theme-climate">
                 <h3>Klima</h3>
                 <p>Vergleiche die Standpunkte der Parteien zu Umweltthemen.</p>
@@ -43,14 +64,20 @@
         </section>
 
 
-
 	<section id="parties">
-	  <h2>Parteien</h2>
-	  <div class="party-logos">
-	    <img src="bilder/parteia.png" alt="Partei A" onclick="showPartyInfo('Partei A')">
-	    <img src="bilder/parteib.png" alt="Partei B" onclick="showPartyInfo('Partei B')">
+ 	 <h2>Parteien</h2>
+ 	 <div class="party-logos">
+  	   <img src="bilder/cdu.png" alt="CDU" onclick="showPartyInfo('CDU')">
+  	   <img src="bilder/gruenen.png" alt="Bündnis 90/Die Grünen" onclick="showPartyInfo('Bündnis 90/Die Grünen')">
+  	   <img src="bilder/spd.png" alt="SPD" onclick="showPartyInfo('SPD')">
+ 	   <img src="bilder/afd.png" alt="AFD" onclick="showPartyInfo('AFD')">
+ 	   <img src="bilder/fdp.png" alt="FDP" onclick="showPartyInfo('FDP')">
+ 	   <img src="bilder/linke.png" alt="Die Linke" onclick="showPartyInfo('Die Linke')">
+ 	   <img src="bilder/csu.png" alt="CSU" onclick="showPartyInfo('CSU')">
+ 	   <img src="bilder/freien.png" alt="Freien Wähler" onclick="showPartyInfo('Freie Wähler')">
 	  </div>
 	</section>
+
 
 	<div id="party-modal" class="modal">
  	 <div class="modal-content">
@@ -66,20 +93,8 @@
 
         <section id="about">
             <h2>Über uns</h2>
-            <p>Diese Plattform wurde entwickelt, um die politische Meinungsbildung zu erleichtern.</p>
+            <p>Ich bin Julian W. aus der Laborschule Dresden (Verano 9). Ich habe diese Plattform entwickelt, um die politische Meinungsbildung zu erleichtern.</p>
         </section>
-
-        <!-- Modales Fenster für die Standpunkte der Parteien und die Details -->
-        <div id="party-modal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h3 id="modal-title"></h3>
-                <p id="modal-description"></p>
-                <h4>Wahlprogramm:</h4>
-                <p id="modal-program"></p>
-                <button onclick="goBackToThemes()">Zurück zur Themenübersicht</button>
-            </div>
-        </div>
     </main>
 
     <footer>
