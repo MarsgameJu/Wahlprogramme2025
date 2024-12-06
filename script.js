@@ -1,34 +1,88 @@
 // script.js
 const data = [
-    { partei: "Partei A", thema: "Klima", position: "Erneuerbare Energien ausbauen." },
-    { partei: "Partei B", thema: "Klima", position: "Atomenergie fördern." },
-    { partei: "Partei A", thema: "Bildung", position: "Mehr Geld für Schulen." },
-    { partei: "Partei B", thema: "Bildung", position: "Digitalisierung der Schulen vorantreiben." },
-    { partei: "Partei A", thema: "Wirtschaft", position: "Mittelstand stärken." },
-    { partei: "Partei B", thema: "Wirtschaft", position: "Großkonzerne entlasten." }
+    { partei: "CDU", thema: "Klima", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Klima", position: "Meinung2" },
+    { partei: "SPD", thema: "Klima", position: "Meinung3" },
+    { partei: "AFD", thema: "Klima", position: "Meinung4" },
+    { partei: "FDP", thema: "Klima", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Klima", position: "Meinung6" },
+    { partei: "CSU", thema: "Klima", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Klima", position: "Meinung8" },
+    { partei: "CDU", thema: "Außen- und Sicherheitspolitik", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Außen- und Sicherheitspolitik", position: "Meinung2" },
+    { partei: "SPD", thema: "Außen- und Sicherheitspolitik", position: "Meinung3" },
+    { partei: "AFD", thema: "Außen- und Sicherheitspolitik", position: "Meinung4" },
+    { partei: "FDP", thema: "Außen- und Sicherheitspolitik", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Außen- und Sicherheitspolitik", position: "Meinung6" },
+    { partei: "CSU", thema: "Außen- und Sicherheitspolitik", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Außen- und Sicherheitspolitik", position: "Meinung8" },
+    { partei: "CDU", thema: "Soziales", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Soziales", position: "Meinung2" },
+    { partei: "SPD", thema: "Soziales", position: "Meinung3" },
+    { partei: "AFD", thema: "Soziales", position: "Meinung4" },
+    { partei: "FDP", thema: "Soziales", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Soziales", position: "Meinung6" },
+    { partei: "CSU", thema: "Soziales", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Soziales", position: "Meinung8" },
+    { partei: "CDU", thema: "Finanzen", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Finanzen", position: "Meinung2" },
+    { partei: "SPD", thema: "Finanzen", position: "Meinung3" },
+    { partei: "AFD", thema: "Finanzen", position: "Meinung4" },
+    { partei: "FDP", thema: "Finanzen", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Finanzen", position: "Meinung6" },
+    { partei: "CSU", thema: "Finanzen", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Finanzen", position: "Meinung8" },
+    { partei: "CDU", thema: "Migration und Innere Sicherheitk", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Migration und Innere Sicherheitk", position: "Meinung2" },
+    { partei: "SPD", thema: "Migration und Innere Sicherheitk", position: "Meinung3" },
+    { partei: "AFD", thema: "Migration und Innere Sicherheitk", position: "Meinung4" },
+    { partei: "FDP", thema: "Migration und Innere Sicherheitk", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Migration und Innere Sicherheitk", position: "Meinung6" },
+    { partei: "CSU", thema: "Migration und Innere Sicherheitk", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Migration und Innere Sicherheitk", position: "Meinung8" },
+    { partei: "CDU", thema: "Bildung", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Bildung", position: "Meinung2" },
+    { partei: "SPD", thema: "Bildung", position: "Meinung3" },
+    { partei: "AFD", thema: "Bildung", position: "Meinung4" },
+    { partei: "FDP", thema: "Bildung", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Bildung", position: "Meinung6" },
+    { partei: "CSU", thema: "Bildung", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Bildung", position: "Meinung8" },
+    { partei: "CDU", thema: "Wirtschaft", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Wirtschaft", position: "Meinung2" },
+    { partei: "SPD", thema: "Wirtschaft", position: "Meinung3" },
+    { partei: "AFD", thema: "Wirtschaft", position: "Meinung4" },
+    { partei: "FDP", thema: "Wirtschaft", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Wirtschaft", position: "Meinung6" },
+    { partei: "CSU", thema: "Wirtschaft", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Wirtschaft", position: "Meinung8" },
+
 ];
 
 
 function showPartyInfo(partyName) {
   const filteredData = data.filter(item => item.partei === partyName);
-  const themesSection = document.querySelector("#themes");
+  const modal = document.getElementById('party-modal');
+  const modalContent = modal.querySelector('.modal-content');
   
-  themesSection.innerHTML = `
+  modalContent.innerHTML = `
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img src="bilder/${partyName.toLowerCase().replace(' ', '')}.png" alt="${partyName} Logo" class="party-logo">
     <h2>${partyName}</h2>
-    <img src="bilder/${partyName.toLowerCase().replace(' ', '')}.png" 
-         alt="${partyName}" 
-         class="party-detail-logo">
-    <div class="card-container">
+    <div class="party-positions">
       ${filteredData.map(item => `
-        <div class="card">
+        <div class="position-card">
           <h3>${item.thema}</h3>
           <p>${item.position}</p>
         </div>
       `).join('')}
     </div>
-    <button class="filter-button" onclick="displayThemes()">Zurück zur Übersicht</button>
+    <button class="filter-button" onclick="closeModal()">Schließen</button>
   `;
+  
+  modal.style.display = 'block';
 }
+
 
 function displayThemes() {
     const themesSection = document.querySelector("#themes");
@@ -99,29 +153,32 @@ function displayChart() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    displayThemes();
-    displayChart();
+    displayThemes(); // Zeige Themenkarten beim Laden
+    displayChart();  // Zeige Diagramm im Vergleichsbereich
 });
 
+
 function showPartyInfo(partyName) {
-  const modal = document.getElementById('party-modal');
-  const modalPartyName = document.getElementById('modal-party-name');
-  const modalPartyLogo = document.getElementById('modal-party-logo');
-  const modalPartyPositions = document.getElementById('modal-party-positions');
-  const modalPartyProgram = document.getElementById('modal-party-program');
+    const filteredData = data.filter(item => item.partei === partyName);
+    const modal = document.getElementById('party-modal');
+    const modalPartyName = document.getElementById('modal-party-name');
+    const modalPartyLogo = document.getElementById('modal-party-logo');
+    const modalPartyPositions = document.getElementById('modal-party-positions');
+    const modalPartyProgram = document.getElementById('modal-party-program');
 
-  modalPartyName.textContent = partyName;
-  modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(' ', '')}.png`;
-
-  const partyPositions = data.filter(item => item.partei === partyName);
-  modalPartyPositions.innerHTML = partyPositions.map(item => `
-    <p><strong>${item.thema}:</strong> ${item.position}</p>
-  `).join('');
-
-  modalPartyProgram.textContent = `Hier könnte das vollständige Wahlprogramm von ${partyName} stehen.`;
-
-  modal.style.display = 'block';
+    modalPartyName.textContent = partyName;
+    modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(/\s+/g, '')}.png`;
+    const partyPositions = data.filter(item => item.partei === partyName);
+    
+    modalPartyPositions.innerHTML = partyPositions.map(item => `
+        <p><strong>${item.thema}:</strong> ${item.position}</p>
+    `).join('');
+    
+    modalPartyProgram.textContent = `Hier könnte das vollständige Wahlprogramm von ${partyName} stehen.`;
+    
+    modal.style.display = 'block';
 }
+
 
 function closeModal() {
   const modal = document.getElementById('party-modal');
