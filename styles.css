@@ -206,3 +206,19 @@ h2 {
   width: 100%; 
   text-align: center; 
 }
+
+.party-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.position-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
