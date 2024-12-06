@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahlprogramm 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="libs/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Wahlprogramme 2025</h1>
+            <p>Vergleiche die Meinungen der Parteien zu den wichtigsten Themen.</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#themes">Themen</a></li>
+                <li><a href="#parties">Parteien</a></li>
+                <li><a href="#about">Über uns</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="themes" class="card-container">
+            <h2>Themen</h2>
+            <div class="card" id="theme-climate">
+                <h3>Klima</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Umweltthemen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Klima')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-education">
+                <h3>Bildung</h3>
+                <p>Entdecke, welche Reformen im Bildungssystem geplant sind.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Bildung')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-economy">
+                <h3>Wirtschaft</h3>
+                <p>Erfahre, wie die Parteien die Wirtschaft fördern wollen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Wirtschaft')">Mehr erfahren</button>
+            </div>
+        </section>
+
+
+
+	<section id="parties">
+	  <h2>Parteien</h2>
+	  <div class="party-logos">
+	    <img src="bilder/parteia.png" alt="Partei A" onclick="showPartyInfo('Partei A')">
+	    <img src="bilder/parteib.png" alt="Partei B" onclick="showPartyInfo('Partei B')">
+	  </div>
+	</section>
+
+	<div id="party-modal" class="modal">
+ 	 <div class="modal-content">
+ 	   <span class="close" onclick="closeModal()">&times;</span>
+ 	   <h2 id="modal-party-name"></h2>
+ 	   <img id="modal-party-logo" src="" alt="">
+	    <h3>Standpunkte:</h3>
+	    <div id="modal-party-positions"></div>
+	    <h3>Wahlprogramm:</h3>
+	    <p id="modal-party-program"></p>
+	  </div>
+	</div>	
+
+        <section id="about">
+            <h2>Über uns</h2>
+            <p>Diese Plattform wurde entwickelt, um die politische Meinungsbildung zu erleichtern.</p>
+        </section>
+
+        <!-- Modales Fenster für die Standpunkte der Parteien und die Details -->
+        <div id="party-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3 id="modal-title"></h3>
+                <p id="modal-description"></p>
+                <h4>Wahlprogramm:</h4>
+                <p id="modal-program"></p>
+                <button onclick="goBackToThemes()">Zurück zur Themenübersicht</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Wahlprogramm Übersicht</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

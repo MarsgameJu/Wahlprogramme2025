@@ -1,0 +1,8 @@
+[
+    { "partei": "Partei A", "thema": "Klima", "position": "Erneuerbare Energien ausbauen." },
+    { "partei": "Partei B", "thema": "Klima", "position": "Atomenergie fördern." },
+    { "partei": "Partei A", "thema": "Bildung", "position": "Mehr Geld für Schulen." },
+    { "partei": "Partei B", "thema": "Bildung", "position": "Digitalisierung der Schulen vorantreiben." },
+    { "partei": "Partei A", "thema": "Wirtschaft", "position": "Mittelstand stärken." },
+    { "partei": "Partei B", "thema": "Wirtschaft", "position": "Großkonzerne entlasten." }
+]
