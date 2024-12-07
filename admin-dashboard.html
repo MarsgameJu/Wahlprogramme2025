@@ -1,0 +1,40 @@
+<!-- admin-dashboard.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Wahlprogramm 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Admin Dashboard</h1>
+        </div>
+    </header>
+    <main>
+        <div class="card-container">
+            <div class="card">
+                <h2>Gesamtbesucher</h2>
+                <p id="total-visitors">Laden...</p>
+            </div>
+            <div class="card">
+                <h2>Beliebte Themen</h2>
+                <canvas id="themes-chart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Beliebte Parteien</h2>
+                <canvas id="parties-chart"></canvas>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Wahlprogramm Übersicht</p>
+    </footer>
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
+
+

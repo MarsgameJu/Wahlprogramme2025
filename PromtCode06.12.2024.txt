@@ -1,0 +1,565 @@
+1. Version des code mit der wirt beginnen der code wird sich wahscheinlich im laufe des gespäches ändern
+
+index.html
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahlprogramm 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <header>
+
+        <div class="hero">
+            <h1>Wahlprogramme 2025</h1>
+	    <h2>Wahlprogramme der Parteien für die Bundestagswahl</h2>
+            <p>Vergleiche die Meinungen der Parteien zu den wichtigsten Themen.</p>
+	    <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#themes">Themen</a></li>
+                <li><a href="#parties">Parteien</a></li>
+                <li><a href="#about">Über mich</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+
+    <main>
+        <section id="themes" class="card-container">
+            <h2>Themen</h2>
+            <div class="card" id="theme-MigrationSecuity">
+                <h3>Migration und Innere Sicherheitk</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Außen- und Sicherheitspolitischen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Migration und Innere Sicherheit')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-foreignSecurity">
+                <h3>Außen- und Sicherheitspolitik</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Außen- und Sicherheitspolitischen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Außen- und Sicherheitspolitik')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-social">
+                <h3>Soziales</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Sozialen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Soziales')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-finances">
+                <h3>Finanzen</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Finanziellen Fragen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Finanzen')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-climate">
+                <h3>Klima</h3>
+                <p>Vergleiche die Standpunkte der Parteien zu Umweltthemen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Klima')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-education">
+                <h3>Bildung</h3>
+                <p>Entdecke, welche Reformen im Bildungssystem geplant sind.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Bildung')">Mehr erfahren</button>
+            </div>
+            <div class="card" id="theme-economy">
+                <h3>Wirtschaft</h3>
+                <p>Erfahre, wie die Parteien die Wirtschaft fördern wollen.</p>
+                <button class="filter-button" onclick="showPartiesForTheme('Wirtschaft')">Mehr erfahren</button>
+            </div>
+        </section>
+
+
+	<section id="parties">
+ 	 <h2>Parteien</h2>
+ 	 <div class="party-logos">
+  	   <img src="bilder/cdu.png" alt="CDU" onclick="showPartyInfo('CDU')">
+  	   <img src="bilder/gruenen.png" alt="Bündnis 90/Die Grünen" onclick="showPartyInfo('Bündnis 90/Die Grünen')">
+  	   <img src="bilder/spd.png" alt="SPD" onclick="showPartyInfo('SPD')">
+ 	   <img src="bilder/afd.png" alt="AFD" onclick="showPartyInfo('AFD')">
+ 	   <img src="bilder/fdp.png" alt="FDP" onclick="showPartyInfo('FDP')">
+ 	   <img src="bilder/linke.png" alt="Die Linke" onclick="showPartyInfo('Die Linke')">
+ 	   <img src="bilder/csu.png" alt="CSU" onclick="showPartyInfo('CSU')">
+ 	   <img src="bilder/freien.png" alt="Freien Wähler" onclick="showPartyInfo('Freie Wähler')">
+	  </div>
+	</section>
+
+
+	<div id="party-modal" class="modal">
+ 	 <div class="modal-content">
+ 	   <span class="close" onclick="closeModal()">&times;</span>
+ 	   <h2 id="modal-party-name"></h2>
+ 	   <img id="modal-party-logo" src="" alt="">
+	    <h3>Standpunkte:</h3>
+	    <div id="modal-party-positions"></div>
+	    <h3>Wahlprogramm:</h3>
+	    <p id="modal-party-program"></p>
+	  </div>
+	</div>	
+
+        <section id="about">
+            <h2>Über mich</h2>
+            <p>Ich bin Julian W. aus der Laborschule Dresden (Verano 9). Ich habe diese Plattform entwickelt, um die politische Meinungsbildung zu erleichtern.</p>
+        </section>
+
+
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Wahlprogramm Übersicht</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+script.js
+
+// script.js
+const data = [
+    { partei: "CDU", thema: "Klima", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Klima", position: "Meinung2" },
+    { partei: "SPD", thema: "Klima", position: "Meinung3" },
+    { partei: "AFD", thema: "Klima", position: "Meinung4" },
+    { partei: "FDP", thema: "Klima", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Klima", position: "Meinung6" },
+    { partei: "CSU", thema: "Klima", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Klima", position: "Meinung8" },
+    { partei: "CDU", thema: "Außen- und Sicherheitspolitik", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Außen- und Sicherheitspolitik", position: "Meinung2" },
+    { partei: "SPD", thema: "Außen- und Sicherheitspolitik", position: "Meinung3" },
+    { partei: "AFD", thema: "Außen- und Sicherheitspolitik", position: "Meinung4" },
+    { partei: "FDP", thema: "Außen- und Sicherheitspolitik", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Außen- und Sicherheitspolitik", position: "Meinung6" },
+    { partei: "CSU", thema: "Außen- und Sicherheitspolitik", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Außen- und Sicherheitspolitik", position: "Meinung8" },
+    { partei: "CDU", thema: "Soziales", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Soziales", position: "Meinung2" },
+    { partei: "SPD", thema: "Soziales", position: "Meinung3" },
+    { partei: "AFD", thema: "Soziales", position: "Meinung4" },
+    { partei: "FDP", thema: "Soziales", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Soziales", position: "Meinung6" },
+    { partei: "CSU", thema: "Soziales", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Soziales", position: "Meinung8" },
+    { partei: "CDU", thema: "Finanzen", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Finanzen", position: "Meinung2" },
+    { partei: "SPD", thema: "Finanzen", position: "Meinung3" },
+    { partei: "AFD", thema: "Finanzen", position: "Meinung4" },
+    { partei: "FDP", thema: "Finanzen", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Finanzen", position: "Meinung6" },
+    { partei: "CSU", thema: "Finanzen", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Finanzen", position: "Meinung8" },
+    { partei: "CDU", thema: "Migration und Innere Sicherheitk", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Migration und Innere Sicherheitk", position: "Meinung2" },
+    { partei: "SPD", thema: "Migration und Innere Sicherheitk", position: "Meinung3" },
+    { partei: "AFD", thema: "Migration und Innere Sicherheitk", position: "Meinung4" },
+    { partei: "FDP", thema: "Migration und Innere Sicherheitk", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Migration und Innere Sicherheitk", position: "Meinung6" },
+    { partei: "CSU", thema: "Migration und Innere Sicherheitk", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Migration und Innere Sicherheitk", position: "Meinung8" },
+    { partei: "CDU", thema: "Bildung", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Bildung", position: "Meinung2" },
+    { partei: "SPD", thema: "Bildung", position: "Meinung3" },
+    { partei: "AFD", thema: "Bildung", position: "Meinung4" },
+    { partei: "FDP", thema: "Bildung", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Bildung", position: "Meinung6" },
+    { partei: "CSU", thema: "Bildung", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Bildung", position: "Meinung8" },
+    { partei: "CDU", thema: "Wirtschaft", position: "Meinung1" },
+    { partei: "Bündnis 90/Die Grünen", thema: "Wirtschaft", position: "Meinung2" },
+    { partei: "SPD", thema: "Wirtschaft", position: "Meinung3" },
+    { partei: "AFD", thema: "Wirtschaft", position: "Meinung4" },
+    { partei: "FDP", thema: "Wirtschaft", position: "Meinung5" },
+    { partei: "Die Linke", thema: "Wirtschaft", position: "Meinung6" },
+    { partei: "CSU", thema: "Wirtschaft", position: "Meinung7." },
+    { partei: "Freien Wähler", thema: "Wirtschaft", position: "Meinung8" },
+
+];
+
+
+function showPartyInfo(partyName) {
+  const filteredData = data.filter(item => item.partei === partyName);
+  const modal = document.getElementById('party-modal');
+  const modalContent = modal.querySelector('.modal-content');
+  
+  modalContent.innerHTML = `
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img src="bilder/${partyName.toLowerCase().replace(' ', '')}.png" alt="${partyName} Logo" class="party-logo">
+    <h2>${partyName}</h2>
+    <div class="party-positions">
+      ${filteredData.map(item => `
+        <div class="position-card">
+          <h3>${item.thema}</h3>
+          <p>${item.position}</p>
+        </div>
+      `).join('')}
+    </div>
+    <button class="filter-button" onclick="closeModal()">Schließen</button>
+  `;
+  
+  modal.style.display = 'block';
+}
+
+
+function displayThemes() {
+    const themesSection = document.querySelector("#themes");
+    const uniqueThemes = [...new Set(data.map(item => item.thema))];
+    
+    themesSection.innerHTML = `
+        <h2>Themen</h2>
+        <div class="card-container">
+            ${uniqueThemes.map(theme => `
+                <div class="card">
+                    <h3>${theme}</h3>
+                    <p>Vergleiche die Standpunkte der Parteien zu ${theme}.</p>
+                    <button class="filter-button" onclick="showPartiesForTheme('${theme}')">Mehr erfahren</button>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function showPartiesForTheme(theme) {
+    const themesSection = document.querySelector("#themes");
+    const filteredData = data.filter(item => item.thema === theme);
+    
+    themesSection.innerHTML = `
+        <h2>${theme}</h2>
+        <div class="card-container">
+            ${filteredData.map(item => `
+                <div class="card">
+                    <h3>${item.partei}</h3>
+                    <p>${item.position}</p>
+                </div>
+            `).join('')}
+        </div>
+        <button class="filter-button" onclick="displayThemes()">Zurück zu allen Themen</button>
+    `;
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayThemes(); // Zeige Themenkarten beim Laden
+});
+
+
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    // Ändern des Icons je nach Modus
+    if (document.body.classList.contains('dark-mode')) {
+        darkModeToggle.innerHTML = '☀️'; // Sonne im Dunkelmodus
+    } else {
+        darkModeToggle.innerHTML = '🌙'; // Mond im Lichtmodus
+    }
+    
+    // Hier können Sie auch Header und Footer anpassen
+});
+
+
+function showPartyInfo(partyName) {
+    const modal = document.getElementById('party-modal');
+    const modalPartyName = document.getElementById('modal-party-name');
+    const modalPartyLogo = document.getElementById('modal-party-logo');
+    const modalPartyPositions = document.getElementById('modal-party-positions');
+
+    modalPartyName.textContent = partyName;
+
+    // Korrigieren Sie den Dateinamen hier
+    modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(/ /g, '')}.png`; 
+
+    const partyPositions = data.filter(item => item.partei === partyName);
+    
+    modalPartyPositions.innerHTML = partyPositions.map(item => `
+        <p><strong>${item.thema}:</strong> ${item.position}</p>
+    `).join('');
+
+    modal.style.display = 'block';
+}
+
+
+
+
+function closeModal() {
+  const modal = document.getElementById('party-modal');
+  modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('party-modal');
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+}
+
+
+style.css
+
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(to right, #0056b3, #ffcc00);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.hero {
+    background-image: url('bilder/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 50px 20px;
+    color: white;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+button.filter-button {
+    background: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button.filter-button:hover {
+    background: #ffcc00;
+}
+
+footer {
+    background: #0056b3;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.party-logos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.party-logos img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.party-logos img:hover {
+  transform: scale(1.1);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.party-logos {
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    margin-top: 20px; 
+}
+
+.party-logos img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.party-logos img:hover {
+  transform: scale(1.1);
+}
+
+
+.party-logos img {
+    width: 100px; 
+    height: auto; 
+    object-fit: contain; 
+}
+
+.party-detail-logo {
+  width: 150px; 
+  height: 150px; 
+  object-fit: contain; 
+  margin: 20px auto;
+  display: block; 
+}
+
+
+h2 {
+  text-align: center; 
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  font-size: 24px; 
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+
+#themes, #parties, #compare, #about {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center; 
+}
+
+#themes h2, #parties h2, #compare h2, #about h2 {
+  margin: 20px 0;
+  width: 100%; 
+  text-align: center; 
+}
+
+.party-logo {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.position-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#dark-mode-toggle {
+    position: absolute; /* Positioniert den Button absolut */
+    top: 20px; /* Abstand vom oberen Rand */
+    right: 20px; /* Abstand vom rechten Rand */
+    background: none; /* Kein Hintergrund */
+    border: none; /* Kein Rahmen */
+    color: white; /* Weiße Farbe für das Symbol */
+    font-size: 24px; /* Größe des Symbols */
+    cursor: pointer; /* Zeigt an, dass es klickbar ist */
+}
+
+
+
+aufbau des Ordners:
+
+projektordner/
+├── index.html         # Haupt-HTML-Datei
+├── styles.css         # Datei für das Styling
+├── script.js          # Datei für JavaScript-Interaktivität
+├── bilder/            # Ordner für Bilder, Logos, etc.
+│   ├── hero-bg.jpg    # Hintergrundbild für den Hero-Bereich
+│   ├── cdu.png        # Logo der CDU
+│   ├── gruenen.png    # Logo von Bündnis 90/Die Grünen
+│   ├── spd.png        # Logo der SPD
+│   ├── afd.png        # Logo der AFD
+│   ├── fdp.png        # Logo der FDP
+│   ├── linke.png      # Logo von Die Linke
+│   ├── csu.png        # Logo der CSU
+│   └── freien.png     # Logo der Freien Wähler
+└── libs/              # Bibliotheken und externe Dateien
+
+
+
+Projektübersicht
+Ziel: Erstellung einer interaktiven Website, auf der Nutzer die Wahlprogramme und Standpunkte verschiedener Parteien zur Bundestagswahl vergleichen können. Die Website soll ansprechend, benutzerfreundlich und interaktiv sein.
+

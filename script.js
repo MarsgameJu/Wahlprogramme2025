@@ -60,6 +60,73 @@ const data = [
 ];
 
 
+function logVisit() {
+    fetch('http://localhost:3000/api/log-visit', { method: 'POST' });
+}
+
+function logThemeView(theme) {
+    fetch('http://localhost:3000/api/log-theme', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    });
+}
+
+function logPartyView(party) {
+    fetch('http://localhost:3000/api/log-party', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ party })
+    });
+}
+
+function loadStats() {
+    fetch('http://localhost:3000/api/stats')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('total-visitors').textContent = data.visits;
+            // Hier können Sie auch Diagramme aktualisieren
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+function loadStats() {
+  fetch('http://localhost:3000/api/stats')
+    .then(response => response.json())
+    .then(data => {
+      // Aktualisieren Sie hier Ihre Statistikanzeige
+      console.log(data);
+    });
+}
+
+
+function logPageVisit() {
+  fetch('/api/log-visit', { method: 'POST' });
+}
+
+function logThemeView(theme) {
+  fetch('/api/log-theme', {
+    method: 'POST',
+    body: JSON.stringify({ theme: theme }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
+function logPartyView(party) {
+  fetch('/api/log-party', {
+    method: 'POST',
+    body: JSON.stringify({ party: party }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  logPageVisit();
+  displayThemes();
+});
+
+
 function showPartyInfo(partyName) {
   const filteredData = data.filter(item => item.partei === partyName);
   const modal = document.getElementById('party-modal');
@@ -84,10 +151,17 @@ function showPartyInfo(partyName) {
 }
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    displayThemes(); // Zeige Themenkarten beim Laden
+    logPageVisit();
+});
+
+
+// Funktion zum Anzeigen der Themen
 function displayThemes() {
     const themesSection = document.querySelector("#themes");
     const uniqueThemes = [...new Set(data.map(item => item.thema))];
-    
+
     themesSection.innerHTML = `
         <h2>Themen</h2>
         <div class="card-container">
@@ -102,10 +176,12 @@ function displayThemes() {
     `;
 }
 
+// Funktion zum Anzeigen der Parteien für ein bestimmtes Thema
 function showPartiesForTheme(theme) {
+  logThemeView(theme);
     const themesSection = document.querySelector("#themes");
     const filteredData = data.filter(item => item.thema === theme);
-    
+
     themesSection.innerHTML = `
         <h2>${theme}</h2>
         <div class="card-container">
@@ -120,64 +196,30 @@ function showPartiesForTheme(theme) {
     `;
 }
 
-function displayChart() {
-    const ctx = document.getElementById('chart-container').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Klima', 'Bildung', 'Wirtschaft'],
-            datasets: [
-                {
-                    label: 'Partei A',
-                    data: [10, 8, 6],
-                    backgroundColor: '#0056b3'
-                },
-                {
-                    label: 'Partei B',
-                    data: [5, 9, 7],
-                    backgroundColor: '#ffcc00'
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                title: {
-                    display: true,
-                    text: 'Vergleich der Parteien nach Themen'
-                }
-            }
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    displayThemes(); // Zeige Themenkarten beim Laden
-    displayChart();  // Zeige Diagramm im Vergleichsbereich
-});
 
 
 function showPartyInfo(partyName) {
-    const filteredData = data.filter(item => item.partei === partyName);
+  logPartyView(partyName);
     const modal = document.getElementById('party-modal');
     const modalPartyName = document.getElementById('modal-party-name');
     const modalPartyLogo = document.getElementById('modal-party-logo');
     const modalPartyPositions = document.getElementById('modal-party-positions');
-    const modalPartyProgram = document.getElementById('modal-party-program');
 
     modalPartyName.textContent = partyName;
-    modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(/\s+/g, '')}.png`;
+
+    // Korrigieren Sie den Dateinamen hier
+    modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(/ /g, '')}.png`; 
+
     const partyPositions = data.filter(item => item.partei === partyName);
     
     modalPartyPositions.innerHTML = partyPositions.map(item => `
         <p><strong>${item.thema}:</strong> ${item.position}</p>
     `).join('');
-    
-    modalPartyProgram.textContent = `Hier könnte das vollständige Wahlprogramm von ${partyName} stehen.`;
-    
+
     modal.style.display = 'block';
 }
+
+
 
 
 function closeModal() {
