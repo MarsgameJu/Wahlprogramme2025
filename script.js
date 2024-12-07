@@ -61,11 +61,11 @@ const data = [
 
 
 function logVisit() {
-    fetch('http://localhost:3000/api/log-visit', { method: 'POST' });
+    fetch('http:// 192.168.2.190:3000/api/log-visit', { method: 'POST' });
 }
 
 function logThemeView(theme) {
-    fetch('http://localhost:3000/api/log-theme', {
+    fetch('http:// 192.168.2.190:3000/api/log-theme', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ theme })
@@ -73,7 +73,7 @@ function logThemeView(theme) {
 }
 
 function logPartyView(party) {
-    fetch('http://localhost:3000/api/log-party', {
+    fetch('http:// 192.168.2.190:3000/api/log-party', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ party })
@@ -81,7 +81,7 @@ function logPartyView(party) {
 }
 
 function loadStats() {
-    fetch('http://localhost:3000/api/stats')
+    fetch('http:// 192.168.2.190:3000/api/stats')
         .then(response => response.json())
         .then(data => {
             document.getElementById('total-visitors').textContent = data.visits;
@@ -92,7 +92,7 @@ function loadStats() {
 
 
 function loadStats() {
-  fetch('http://localhost:3000/api/stats')
+  fetch('http:// 192.168.2.190:3000/api/stats')
     .then(response => response.json())
     .then(data => {
       // Aktualisieren Sie hier Ihre Statistikanzeige
