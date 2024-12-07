@@ -102,11 +102,11 @@ function loadStats() {
 
 
 function logPageVisit() {
-  fetch('/api/log-visit', { method: 'POST' });
+  fetch('http://192.168.2.190:3000/api/log-visit', { method: 'POST' });
 }
 
 function logThemeView(theme) {
-  fetch('/api/log-theme', {
+  fetch('http://192.168.2.190:3000/api/log-theme', {
     method: 'POST',
     body: JSON.stringify({ theme: theme }),
     headers: { 'Content-Type': 'application/json' }
@@ -114,7 +114,7 @@ function logThemeView(theme) {
 }
 
 function logPartyView(party) {
-  fetch('/api/log-party', {
+  fetch('http://192.168.2.190:3000/api/log-party', {
     method: 'POST',
     body: JSON.stringify({ party: party }),
     headers: { 'Content-Type': 'application/json' }
