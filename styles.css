@@ -50,19 +50,20 @@ nav ul li a {
 }
 
 .card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    padding: 20px;
-    margin: 10px;
-    text-align: center;
-    transition: transform 0.3s;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s; /* Box-shadow hinzugefügt */
 }
 
 .card:hover {
-    transform: scale(1.05);
+  transform: scale(1); /* Entfernen der Skalierung */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Verstärkung des Schattens */
 }
 
 button.filter-button {
@@ -106,7 +107,7 @@ footer {
 }
 
 .modal {
-  display: none;
+  display: none; /* Modal ist standardmäßig verborgen */
   position: fixed;
   z-index: 1;
   left: 0;
@@ -114,7 +115,8 @@ footer {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4); /* Halbdurchsichtiger Hintergrund */
 }
 
 .modal-content {
@@ -123,7 +125,6 @@ footer {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 600px;
 }
 
 .close {
@@ -294,5 +295,16 @@ footer {
     padding: 10px 0;
     width: 100%;
 }
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.filter-button.active {
+  background-color: #4BC0C0;  /* Zum Beispiel eine grüne Farbe für den aktiven Button */
+  color: white;  /* Textfarbe weiß */
+}
+
 
 

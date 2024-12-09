@@ -61,80 +61,114 @@ const data = [
 
 
 function logVisit() {
-    fetch('http://---:3000/api/log-visit', { method: 'POST' });
+  fetch('http://localhost:3000/api/log-visit', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Besuch erfolgreich geloggt');
+      } else {
+          console.error('Fehler beim Loggen des Besuchs');
+      }
+  })
+  .catch(error => console.error('Fehler bei der Anfrage:', error));
 }
 
+function logVisit() {
+  fetch('http://localhost:3000/api/log-visit', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Besuch erfolgreich geloggt');
+      } else {
+          console.error('Fehler beim Loggen des Besuchs');
+      }
+  })
+  .catch(error => console.error('Fehler bei der Anfrage:', error));
+}
+
+// Diese Funktion wurde im vorherigen Beispiel verwendet, um Themen zu loggen.
 function logThemeView(theme) {
-    fetch('http://---:3000/api/log-theme', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme })
-    });
+  fetch('http://localhost:3000/api/log-theme', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ theme: theme })
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Thema erfolgreich geloggt:', theme);
+      } else {
+          console.error('Fehler beim Loggen des Themas');
+      }
+  })
+  .catch(error => console.error('Fehler bei der Anfrage:', error));
 }
 
+// Diese Funktion wurde im vorherigen Beispiel verwendet, um Parteien zu loggen.
 function logPartyView(party) {
-    fetch('http://---:3000/api/log-party', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ party })
-    });
+  fetch('http://localhost:3000/api/log-party', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ party: party })
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Partei erfolgreich geloggt:', party);
+      } else {
+          console.error('Fehler beim Loggen der Partei');
+      }
+  })
+  .catch(error => console.error('Fehler bei der Anfrage:', error));
 }
+
+
+
+// Beispiel für das Loggen von Website-Besuchen:
+
 
 function loadStats() {
-    fetch('http://---:3000/api/stats')
+    fetch('http://localhost:3000/api/stats')
         .then(response => response.json())
         .then(data => {
             document.getElementById('total-visitors').textContent = data.visits;
             // Hier können Sie auch Diagramme aktualisieren
+            console.log(data);
         })
         .catch(error => console.error('Error:', error));
 }
 
 
-function loadStats() {
-  fetch('http://---:3000/api/stats')
-    .then(response => response.json())
-    .then(data => {
-      // Aktualisieren Sie hier Ihre Statistikanzeige
-      console.log(data);
-    });
-}
-
-
 function logPageVisit() {
-  fetch('http://---:3000/api/log-visit', { method: 'POST' });
+  fetch('/api/log-visit', { method: 'POST' });
 }
 
-function logThemeView(theme) {
-  fetch('http://---:3000/api/log-theme', {
-    method: 'POST',
-    body: JSON.stringify({ theme: theme }),
-    headers: { 'Content-Type': 'application/json' }
-  });
-}
-
-function logPartyView(party) {
-  fetch('http://---0:3000/api/log-party', {
-    method: 'POST',
-    body: JSON.stringify({ party: party }),
-    headers: { 'Content-Type': 'application/json' }
-  });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
-  logPageVisit();
+  logVisit();
   displayThemes();
 });
 
 
 function showPartyInfo(partyName) {
-  const filteredData = data.filter(item => item.partei === partyName);
+  logPartyView(partyName);
   const modal = document.getElementById('party-modal');
   const modalContent = modal.querySelector('.modal-content');
+  const filteredData = data.filter(item => item.partei === partyName);
   
   modalContent.innerHTML = `
     <span class="close" onclick="closeModal()">&times;</span>
-    <img src="bilder/${partyName.toLowerCase().replace(' ', '')}.png" alt="${partyName} Logo" class="party-logo">
+    <img src="bilder/${partyName.toLowerCase().replace(/ /g, '')}.png" alt="${partyName} Logo" class="party-logo">
     <h2>${partyName}</h2>
     <div class="party-positions">
       ${filteredData.map(item => `
@@ -150,11 +184,6 @@ function showPartyInfo(partyName) {
   modal.style.display = 'block';
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    displayThemes(); // Zeige Themenkarten beim Laden
-    logPageVisit();
-});
 
 
 // Funktion zum Anzeigen der Themen
@@ -195,32 +224,6 @@ function showPartiesForTheme(theme) {
         <button class="filter-button" onclick="displayThemes()">Zurück zu allen Themen</button>
     `;
 }
-
-
-
-function showPartyInfo(partyName) {
-  logPartyView(partyName);
-    const modal = document.getElementById('party-modal');
-    const modalPartyName = document.getElementById('modal-party-name');
-    const modalPartyLogo = document.getElementById('modal-party-logo');
-    const modalPartyPositions = document.getElementById('modal-party-positions');
-
-    modalPartyName.textContent = partyName;
-
-    // Korrigieren Sie den Dateinamen hier
-    modalPartyLogo.src = `bilder/${partyName.toLowerCase().replace(/ /g, '')}.png`; 
-
-    const partyPositions = data.filter(item => item.partei === partyName);
-    
-    modalPartyPositions.innerHTML = partyPositions.map(item => `
-        <p><strong>${item.thema}:</strong> ${item.position}</p>
-    `).join('');
-
-    modal.style.display = 'block';
-}
-
-
-
 
 function closeModal() {
   const modal = document.getElementById('party-modal');

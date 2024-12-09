@@ -1,0 +1,33 @@
+{
+  "daily": {
+    "2024-12-08": 11,
+    "2024-12-09": 15,
+    "2024-12-10": 20
+  },
+  "weekly": {
+    "2024-12-01": 50,
+    "2024-12-02": 60
+  },
+  "monthly": {
+    "2024-12": 300
+  },
+  "themeViews": {
+    "Klima": 2,
+    "Bildung": 3,
+    "Wirtschaft": 1,
+    "Außen- und Sicherheitspolitik": 1,
+    "Soziales": 1,
+    "Finanzen": 1,
+    "Migration und Innere Sicherheitk": 1
+  },
+  "partyViews": {
+    "CDU": 1,
+    "Die Linke": 3,
+    "Bündnis 90/Die Grünen": 3,
+    "SPD": 3,
+    "AFD": 2,
+    "FDP": 2,
+    "CSU": 1,
+    "Freien Wähler": 1
+  }
+}
