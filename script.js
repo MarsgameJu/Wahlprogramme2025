@@ -224,7 +224,6 @@ function displayThemes() {
 
 // Funktion zum Anzeigen der Parteien für ein bestimmtes Thema
 function showPartiesForTheme(theme) {
-  logThemeView(theme);
     const themesSection = document.querySelector("#themes");
     const filteredData = data.filter(item => item.thema === theme);
 
@@ -235,6 +234,7 @@ function showPartiesForTheme(theme) {
                 <div class="card">
                     <h3>${item.partei}</h3>
                     <p>${item.position}</p>
+                    <p><strong>Kanzlerkandidat*in:</strong> ${kandidaten[item.partei] || "Keine Angabe"}</p>
                 </div>
             `).join('')}
         </div>
@@ -242,10 +242,6 @@ function showPartiesForTheme(theme) {
     `;
 }
 
-function closeModal() {
-  const modal = document.getElementById('party-modal');
-  modal.style.display = 'none';
-}
 
 window.onclick = function(event) {
   const modal = document.getElementById('party-modal');
