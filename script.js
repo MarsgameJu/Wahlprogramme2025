@@ -1,4 +1,16 @@
 // script.js
+
+const kandidaten = {
+    "CDU": "Friedrich Merz",
+    "SPD": "Olaf Scholz",
+    "Bündnis 90/Die Grünen": "Robert Habeck",
+    "FDP": "Christian Lindner",
+    "Die Linke": "Heidi Reichinnek und Jan van Aken",
+    "AFD": "Alice Weidel",
+    "CSU": "-"
+    "BSW": "Sahra Wagenknecht"
+};
+
 const data = [
     { partei: "CDU", thema: "Klima", position: "Meinung1" },
     { partei: "Bündnis 90/Die Grünen", thema: "Klima", position: "Meinung2" },
@@ -161,28 +173,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function showPartyInfo(partyName) {
-  logPartyView(partyName);
-  const modal = document.getElementById('party-modal');
-  const modalContent = modal.querySelector('.modal-content');
-  const filteredData = data.filter(item => item.partei === partyName);
-  
-  modalContent.innerHTML = `
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img src="bilder/${partyName.toLowerCase().replace(/ /g, '')}.png" alt="${partyName} Logo" class="party-logo">
-    <h2>${partyName}</h2>
-    <div class="party-positions">
-      ${filteredData.map(item => `
-        <div class="position-card">
-          <h3>${item.thema}</h3>
-          <p>${item.position}</p>
-        </div>
-      `).join('')}
-    </div>
-    <button class="filter-button" onclick="closeModal()">Schließen</button>
-  `;
-  
-  modal.style.display = 'block';
+    const modal = document.getElementById('party-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    const filteredData = data.filter(item => item.partei === partyName);
+
+    if (filteredData.length > 0) {
+        const kanzlerkandidat = kandidaten[partyName] || "Keine Angabe"; // Hole den Kanzlerkandidaten
+
+        modalContent.innerHTML = `
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="bilder/${partyName.toLowerCase().replace(/ /g, '')}.png" alt="${partyName} Logo" class="party-logo">
+            <h2>${partyName}</h2>
+            <h3>Kanzlerkandidat*in: ${kanzlerkandidat}</h3>
+            <div class="party-positions">
+                ${filteredData.map(item => `
+                    <div class="position-card">
+                        <h3>${item.thema}</h3>
+                        <p>${item.position}</p>
+                    </div>
+                `).join('')}
+            </div>
+            <button class="filter-button" onclick="closeModal()">Schließen</button>
+        `;
+    }
+
+    modal.style.display = 'block';
 }
+
 
 
 
