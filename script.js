@@ -173,37 +173,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function showPartyInfo(partyName) {
-    const modal = document.getElementById('party-modal');
-    const modalContent = modal.querySelector('.modal-content');
-    const filteredData = data.filter(item => item.partei === partyName);
-
-    if (filteredData.length > 0) {
-        const kanzlerkandidat = kandidaten[partyName] || "Keine Angabe";
-
-        modalContent.innerHTML = `
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img src="bilder/${partyName.toLowerCase().replace(/ /g, '')}.png" alt="${partyName} Logo" class="party-logo">
-            <h2>${partyName}</h2>
-            <h3>Kanzlerkandidat*in: ${kanzlerkandidat}</h3>
-            <div class="party-positions">
-                ${filteredData.map(item => `
-                    <div class="position-card">
-                        <h3>${item.thema}</h3>
-                        <p>${item.position}</p>
-                    </div>
-                `).join('')}
-            </div>
-            <button class="filter-button" onclick="closeModal()">Schließen</button>
-        `;
-    }
-
-    modal.style.display = 'block';
-}
-
-
-
-
-
+  logPartyView(partyName);
+  const modal = document.getElementById('party-modal');
+  const modalContent = modal.querySelector('.modal-content');
+  const filteredData = data.filter(item => item.partei === partyName);
+  
+  modalContent.innerHTML = `
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img src="bilder/${partyName.toLowerCase().replace(/ /g, '')}.png" alt="${partyName} Logo" class="party-logo">
+    <h2>${partyName}</h2>
+    <div class="party-positions">
+      ${filteredData.map(item => `
+        <div class="position-card">
+          <h3>${item.thema}</h3>
+          <p>${item.position}</p>
+        </div>
+      `).join('')}
+    </div>
+    <button class="filter-button" onclick="closeModal()">Schließen</button>
+  `;
+  
+  modal.style.display = 'block';
 // Funktion zum Anzeigen der Themen
 function displayThemes() {
     const themesSection = document.querySelector("#themes");
@@ -225,6 +215,7 @@ function displayThemes() {
 
 // Funktion zum Anzeigen der Parteien für ein bestimmtes Thema
 function showPartiesForTheme(theme) {
+    logThemeView(theme);
     const themesSection = document.querySelector("#themes");
     const filteredData = data.filter(item => item.thema === theme);
 
@@ -242,7 +233,10 @@ function showPartiesForTheme(theme) {
         <button class="filter-button" onclick="displayThemes()">Zurück zu allen Themen</button>
     `;
 }
-
+function closeModal() {
+  const modal = document.getElementById('party-modal');
+  modal.style.display = 'none';
+}
 
 window.onclick = function(event) {
   const modal = document.getElementById('party-modal');
