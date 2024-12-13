@@ -178,7 +178,7 @@ function showPartyInfo(partyName) {
     const filteredData = data.filter(item => item.partei === partyName);
 
     if (filteredData.length > 0) {
-        const kanzlerkandidat = kandidaten[partyName] || "Keine Angabe"; // Hole den Kanzlerkandidaten
+        const kanzlerkandidat = kandidaten[partyName] || "Keine Angabe";
 
         modalContent.innerHTML = `
             <span class="close" onclick="closeModal()">&times;</span>
@@ -199,6 +199,7 @@ function showPartyInfo(partyName) {
 
     modal.style.display = 'block';
 }
+
 
 
 
