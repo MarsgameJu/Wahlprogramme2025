@@ -1,16 +1,4 @@
 // script.js
-
-const kandidaten = {
-    "CDU": "Friedrich Merz",
-    "SPD": "Olaf Scholz",
-    "Bündnis 90/Die Grünen": "Robert Habeck",
-    "FDP": "Christian Lindner",
-    "Die Linke": "Heidi Reichinnek und Jan van Aken",
-    "AFD": "Alice Weidel",
-    "CSU": "-"
-    "BSW": "Sahra Wagenknecht"
-};
-
 const data = [
     { partei: "CDU", thema: "Klima", position: "Meinung1" },
     { partei: "Bündnis 90/Die Grünen", thema: "Klima", position: "Meinung2" },
@@ -194,6 +182,10 @@ function showPartyInfo(partyName) {
   `;
   
   modal.style.display = 'block';
+}
+
+
+
 // Funktion zum Anzeigen der Themen
 function displayThemes() {
     const themesSection = document.querySelector("#themes");
@@ -215,7 +207,7 @@ function displayThemes() {
 
 // Funktion zum Anzeigen der Parteien für ein bestimmtes Thema
 function showPartiesForTheme(theme) {
-    logThemeView(theme);
+  logThemeView(theme);
     const themesSection = document.querySelector("#themes");
     const filteredData = data.filter(item => item.thema === theme);
 
@@ -226,13 +218,13 @@ function showPartiesForTheme(theme) {
                 <div class="card">
                     <h3>${item.partei}</h3>
                     <p>${item.position}</p>
-                    <p><strong>Kanzlerkandidat*in:</strong> ${kandidaten[item.partei] || "Keine Angabe"}</p>
                 </div>
             `).join('')}
         </div>
         <button class="filter-button" onclick="displayThemes()">Zurück zu allen Themen</button>
     `;
 }
+
 function closeModal() {
   const modal = document.getElementById('party-modal');
   modal.style.display = 'none';

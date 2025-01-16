@@ -12,44 +12,39 @@ app.use(express.static(path.join(__dirname))); // Statische Dateien bereitstelle
 
 const visitorDataPath = path.join(__dirname, 'visitor-data.json');
 
-// Besuchsdaten laden mit Fehlerbehandlung
-// Besuchsdaten laden mit Fehlerbehandlung
+
+
+
+// Besuchsdaten laden
 function loadVisitorData() {
     try {
         if (!fs.existsSync(visitorDataPath)) {
-            // Wenn die Datei nicht existiert, erzeuge eine leere Datenstruktur
             return {
                 daily: {},
-                weekly: {},
-                monthly: {},
+                hourly: {},
                 themeViews: {},
                 partyViews: {}
             };
         }
-        // Lade die JSON-Daten
         const data = fs.readFileSync(visitorDataPath, 'utf-8');
         const parsedData = JSON.parse(data);
 
-        // Sicherstellen, dass 'daily', 'weekly' und 'monthly' existieren
-        if (!parsedData.daily) parsedData.daily = {};
-        if (!parsedData.weekly) parsedData.weekly = {};
-        if (!parsedData.monthly) parsedData.monthly = {};
-        if (!parsedData.themeViews) parsedData.themeViews = {};
-        if (!parsedData.partyViews) parsedData.partyViews = {};
-
+        // Sicherstellen, dass die Schlüssel existieren
+        parsedData.daily ??= {};
+        parsedData.hourly ??= {};
+        parsedData.themeViews ??= {};
+        parsedData.partyViews ??= {};
         return parsedData;
     } catch (error) {
         console.error('Fehler beim Laden der Besuchsdaten:', error);
         return {
             daily: {},
-            weekly: {},
-            monthly: {},
+            hourly: {},
             themeViews: {},
             partyViews: {}
         };
     }
 }
-
 
 // Besuchsdaten speichern
 function saveVisitorData(data) {
@@ -60,146 +55,131 @@ function saveVisitorData(data) {
     }
 }
 
-// API-Endpunkt zum Protokollieren von Besuchen
-// API-Endpunkt zum Protokollieren von Besuchen
+// Protokolliere Besuche
 app.post('/api/log-visit', (req, res) => {
     try {
-        let visitorData = loadVisitorData();  // Daten erneut laden, um sicherzustellen, dass sie aktuell sind
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        visitorData.daily[today] = (visitorData.daily[today] || 0) + 1;  // Zähler erhöhen
-        saveVisitorData(visitorData);  // Besuchsdaten speichern
-        res.sendStatus(200); // Erfolgreiche Antwort
+        let visitorData = loadVisitorData();
+        const now = new Date();
+
+        const today = now.toISOString().split('T')[0];
+        const currentHour = `${now.getHours().toString().padStart(2, '0')}:00`;
+
+        visitorData.daily[today] = (visitorData.daily[today] || 0) + 1;
+        visitorData.hourly[today] ??= {};
+        visitorData.hourly[today][currentHour] = (visitorData.hourly[today][currentHour] || 0) + 1;
+
+        saveVisitorData(visitorData);
+        res.sendStatus(200);
     } catch (error) {
         console.error('Fehler beim Loggen des Besuchs:', error);
         res.status(500).json({ error: 'Interner Serverfehler' });
     }
 });
 
+// Filter für die letzten 24 Stunden
+function filterLast24Hours(hourlyData) {
+    const result = {};
+    const now = new Date();
+    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000); // 24 Stunden zurück
 
-// API-Endpunkt zum Protokollieren von Themenaufrufen
+    // Durchlaufe die täglichen Daten und füge nur die letzten 24 Stunden hinzu
+    for (let date in hourlyData) {
+        const dateData = hourlyData[date];
+        for (let hour in dateData) {
+            const hourTime = new Date(`${date}T${hour}:00`); // Kombiniere Datum und Stunde
+            if (hourTime >= oneDayAgo) {
+                if (!result[date]) result[date] = {};
+                result[date][hour] = dateData[hour];
+            }
+        }
+    }
+
+    return result;
+}
+
+function filterLast7Days(dailyData) {
+    const now = new Date();
+    const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+    const result = {};
+
+    for (let date in dailyData) {
+        const dataDate = new Date(date);
+        if (dataDate >= sevenDaysAgo) {
+            result[date] = dailyData[date];
+        }
+    }
+    return result;
+}
+
+function filterLast30Days(dailyData) {
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000);
+    const result = {};
+
+    for (let date in dailyData) {
+        const dataDate = new Date(date);
+        if (dataDate >= thirtyDaysAgo) {
+            result[date] = dailyData[date];
+        }
+    }
+    return result;
+}
+
+app.get('/api/stats', (req, res) => {
+    const timeframe = req.query.timeframe; // 'day', 'week', 'month'
+    console.log("Zeitrahmen empfangen:", timeframe);
+
+    const validTimeframes = { 
+        day: 'hourly',
+        week: 'daily',
+        month: 'daily'
+    };
+
+    if (timeframe && validTimeframes[timeframe]) {
+        let visitorData = loadVisitorData();
+        const timeframeKey = validTimeframes[timeframe];
+
+        if (timeframe === 'day') {
+            const data = filterLast24Hours(visitorData[timeframeKey]);
+            console.log("Gefilterte Daten für 24 Stunden:", data); // Debugging
+            res.json({ visitors: data, themeViews: visitorData.themeViews, partyViews: visitorData.partyViews });
+        } else if (timeframe === 'week') {
+            const data = filterLast7Days(visitorData[timeframeKey]);
+            res.json({ visitors: data, themeViews: visitorData.themeViews, partyViews: visitorData.partyViews });
+        } else if (timeframe === 'month') {
+            const data = filterLast30Days(visitorData[timeframeKey]);
+            res.json({ visitors: data, themeViews: visitorData.themeViews, partyViews: visitorData.partyViews });
+        }
+    } else {
+        res.status(400).json({ error: "Ungültiger Zeitraum oder keine Daten vorhanden" });
+    }
+});
+
+// Protokolliere Themenaufrufe
 app.post('/api/log-theme', (req, res) => {
     const { theme } = req.body;
     if (theme) {
         let visitorData = loadVisitorData();
         visitorData.themeViews[theme] = (visitorData.themeViews[theme] || 0) + 1;
         saveVisitorData(visitorData);
-        res.sendStatus(200); // Erfolgreiche Antwort
+        res.sendStatus(200);
     } else {
         res.status(400).json({ error: 'Kein Thema angegeben' });
     }
 });
 
-// API-Endpunkt zum Protokollieren von Parteienaufrufen
+// Protokolliere Parteienaufrufe
 app.post('/api/log-party', (req, res) => {
     const { party } = req.body;
     if (party) {
         let visitorData = loadVisitorData();
         visitorData.partyViews[party] = (visitorData.partyViews[party] || 0) + 1;
         saveVisitorData(visitorData);
-        res.sendStatus(200); // Erfolgreiche Antwort
+        res.sendStatus(200);
     } else {
         res.status(400).json({ error: 'Keine Partei angegeben' });
     }
 });
-
-// API-Endpunkt zum Abrufen von Statistiken
-app.get('/api/stats', (req, res) => {
-    const timeframe = req.query.timeframe; // 'day', 'week', 'month'
-    console.log("Zeitrahmen empfangen:", timeframe); // Debugging: Welcher Zeitraum wird angefordert?
-
-    const validTimeframes = {
-        day: 'daily',
-        week: 'weekly',
-        month: 'monthly'
-    };
-
-    // Überprüfen, ob der Zeitraum gültig ist
-    if (timeframe && validTimeframes[timeframe]) {
-        let visitorData = loadVisitorData(); // Daten erneut laden
-        const timeframeKey = validTimeframes[timeframe]; // 'daily', 'weekly', 'monthly'
-
-        // Für 'weekly' und 'monthly' Aggregationen durchführen
-        if (timeframe === 'week') {
-            // Berechne Besuche für die letzte Woche (z. B. von Mo bis So)
-            visitorData = aggregateWeeklyData(visitorData);
-        } else if (timeframe === 'month') {
-            // Berechne Besuche für den letzten Monat
-            visitorData = aggregateMonthlyData(visitorData);
-        }
-
-        console.log("Daten für Zeitraum:", timeframeKey, visitorData[timeframeKey]);  // Debugging: Zeigt die Daten für den Zeitraum an
-
-        if (visitorData[timeframeKey] && Object.keys(visitorData[timeframeKey]).length > 0) {
-            res.json({
-                visitors: visitorData[timeframeKey], // Rückgabe der Besucherdaten für den angegebenen Zeitraum
-                themeViews: visitorData.themeViews,  // Rückgabe der Daten zu Themen
-                partyViews: visitorData.partyViews   // Rückgabe der Daten zu Parteien
-            });
-        } else {
-            console.error("Keine Daten für diesen Zeitraum gefunden");
-            res.status(400).json({ error: "Keine Daten für diesen Zeitraum vorhanden" });
-        }
-    } else {
-        console.error("Ungültiger Zeitraum:", timeframe);
-        res.status(400).json({ error: "Ungültiger Zeitraum oder keine Daten vorhanden" });
-    }
-});
-
-// Aggregiere die Daten für die letzte Woche
-function aggregateWeeklyData(visitorData) {
-    const aggregatedData = {};
-
-    // Iteriere durch alle täglichen Besuchsdaten
-    for (let date in visitorData.daily) {
-        const dateObj = new Date(date);
-        const weekStartDate = getWeekStartDate(dateObj); // Berechne den Start der Woche
-        const weekKey = `${weekStartDate.getFullYear()}-${weekStartDate.getMonth() + 1}-${weekStartDate.getDate()}`;
-
-        // Füge die Besuche für diese Woche hinzu
-        if (!aggregatedData[weekKey]) {
-            aggregatedData[weekKey] = 0;
-        }
-        aggregatedData[weekKey] += visitorData.daily[date];
-    }
-
-    return {
-        ...visitorData,
-        weekly: aggregatedData
-    };
-}
-
-// Berechne den Start der Woche (Montag)
-function getWeekStartDate(date) {
-    const dayOfWeek = date.getDay();
-    const diff = date.getDate() - dayOfWeek + (dayOfWeek == 0 ? -6 : 1); // Gehe zum Montag der Woche
-    const weekStartDate = new Date(date.setDate(diff));
-    return weekStartDate;
-}
-
-// Aggregiere die Daten für den letzten Monat
-function aggregateMonthlyData(visitorData) {
-    const aggregatedData = {};
-
-    // Iteriere durch alle täglichen Besuchsdaten
-    for (let date in visitorData.daily) {
-        const dateObj = new Date(date);
-        const monthKey = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}`; // Jahr und Monat
-
-        // Füge die Besuche für diesen Monat hinzu
-        if (!aggregatedData[monthKey]) {
-            aggregatedData[monthKey] = 0;
-        }
-        aggregatedData[monthKey] += visitorData.daily[date];
-    }
-
-    return {
-        ...visitorData,
-        monthly: aggregatedData
-    };
-}
-
-
-
 
 // Server starten
 app.listen(port, () => {
