@@ -302,9 +302,16 @@ canvas {
 }
 
 .filter-button.active {
-  background-color: #4BC0C0;  /* Zum Beispiel eine grüne Farbe für den aktiven Button */
-  color: white;  /* Textfarbe weiß */
+  background-color: #4BC0C0;
+  color: white; 
 }
 
+.party-positions p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
 
+.card p.position {
+  text-align: left;
+}
 

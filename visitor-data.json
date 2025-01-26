@@ -29,8 +29,8 @@
     "2024-12-09": {
       "19:00": 1
     },
-    "2025-01-14": {
-      "20:00": 2
+    "2025-01-11": {
+      "17:00": 1
     }
   },
   "daily": {
@@ -42,23 +42,22 @@
     "2024-12-03": 60,
     "2024-12-02": 50,
     "2024-12-09": 11,
-    "2025-01-14": 2
+    "2025-01-11": 1
   },
   "themeViews": {
-    "Klima": 31,
-    "Wirtschaft": 45,
-    "Bildung": 52,
+    "Klima": 30,
+    "Wirtschaft": 46,
+    "Bildung": 50,
     "Migration": 25,
-    "Finanzen": 1,
-    "Migration und Innere Sicherheitk": 1
+    "Finanzen": 1
   },
   "partyViews": {
-    "CDU": 21,
-    "SPD": 16,
+    "CDU": 20,
+    "SPD": 15,
     "Bündnis 90/Die Grünen": 30,
-    "FDP": 10,
-    "Die Linke": 5,
-    "AFD": 7,
+    "FDP": 11,
+    "Die Linke": 6,
+    "AFD": 8,
     "CSU": 8
   }
 }
