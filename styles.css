@@ -1,3 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(to right, #0056b3, #ffcc00);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+footer {
+    background: #0056b3;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+#popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#popupContent {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+#popupContent p {
+    margin-bottom: 20px;
+}
+
+.popup-button {
+    background: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 0 10px;
+}
+
+.popup-button:hover {
+    background: #ffcc00;
+}
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
@@ -314,4 +384,49 @@ canvas {
 .card p.position {
   text-align: left;
 }
+#blurredContent {
+  transition: filter 0.3s ease; /* Sanfter Übergang */
+}
 
+#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Popup ist über dem Hintergrund */
+}
+
+#popupContent {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 90%;
+  z-index: 20; /* Popup-Content bleibt im Vordergrund */
+}
+
+#popupContent p {
+  margin-bottom: 20px;
+}
+
+.popup-button {
+  background: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin: 0 10px;
+}
+
+.popup-button:hover {
+  background: #ffcc00;
+}
