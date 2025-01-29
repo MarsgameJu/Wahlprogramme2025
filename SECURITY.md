@@ -12,5 +12,7 @@
 
 ## Reporting a Vulnerability
 
-please report secrity issues in teh Issues tab and i will fix it
-I accept no liability for any security problems.
+- please report secrity issues in teh Issues tab and i will fix it	
+
+
+- I accept no liability for any security problems.
