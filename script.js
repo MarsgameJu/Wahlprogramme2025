@@ -59,108 +59,14 @@ const data = [
 ];
 
 
-function logVisit() {
-  fetch('http://localhost:3000/api/log-visit', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-  })
-  .then(response => {
-      if (response.ok) {
-          console.log('Besuch erfolgreich geloggt');
-      } else {
-          console.error('Fehler beim Loggen des Besuchs');
-      }
-  })
-  .catch(error => console.error('Fehler bei der Anfrage:', error));
-}
-
-function logVisit() {
-  fetch('http://localhost:3000/api/log-visit', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-  })
-  .then(response => {
-      if (response.ok) {
-          console.log('Besuch erfolgreich geloggt');
-      } else {
-          console.error('Fehler beim Loggen des Besuchs');
-      }
-  })
-  .catch(error => console.error('Fehler bei der Anfrage:', error));
-}
-
-// Diese Funktion wurde im vorherigen Beispiel verwendet, um Themen zu loggen.
-function logThemeView(theme) {
-  fetch('http://localhost:3000/api/log-theme', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ theme: theme })
-  })
-  .then(response => {
-      if (response.ok) {
-          console.log('Thema erfolgreich geloggt:', theme);
-      } else {
-          console.error('Fehler beim Loggen des Themas');
-      }
-  })
-  .catch(error => console.error('Fehler bei der Anfrage:', error));
-}
-
-// Diese Funktion wurde im vorherigen Beispiel verwendet, um Parteien zu loggen.
-function logPartyView(party) {
-  fetch('http://localhost:3000/api/log-party', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ party: party })
-  })
-  .then(response => {
-      if (response.ok) {
-          console.log('Partei erfolgreich geloggt:', party);
-      } else {
-          console.error('Fehler beim Loggen der Partei');
-      }
-  })
-  .catch(error => console.error('Fehler bei der Anfrage:', error));
-}
-
-
-
-// Beispiel für das Loggen von Website-Besuchen:
-
-
-function loadStats() {
-    fetch('http://localhost:3000/api/stats')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('total-visitors').textContent = data.visits;
-            // Hier können Sie auch Diagramme aktualisieren
-            console.log(data);
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-
-function logPageVisit() {
-  fetch('/api/log-visit', { method: 'POST' });
-}
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  logVisit();
   displayThemes();
 });
 
 
 function showPartyInfo(partyName) {
-    logPartyView(partyName);
     const modal = document.getElementById('party-modal');
     const modalContent = modal.querySelector('.modal-content');
     const filteredData = data.filter(item => item.partei === partyName);
@@ -176,7 +82,7 @@ function showPartyInfo(partyName) {
             <p>${item.position}</p>
           </div>
         `).join('')}
-      </div>
+       <p class="src-link">   Links:&nbsp; &nbsp;   <a class="link-style" href="${partyName.replace(/\s+/g, '').toLowerCase() === 'cdu-csu' ? 'https://www.bundestagswahl-bw.de/wahlprogramm-cdu#c117028' : 'src/' + partyName.replace(/\s+/g, '').toLowerCase() + '-gp.pdf'}">     &rArr; Grundsatzprogramm.pdf   </a>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;   <a class="link-style" href="src/${partyName.replace(/\s+/g, '').toLowerCase()}-wp.pdf">     &rArr; Wahlprogramm.pdf   </a> </p>
       <button class="filter-button" onclick="closeModal()">Schließen</button>
     `;
     
@@ -185,7 +91,6 @@ function showPartyInfo(partyName) {
 
 
 
-// Funktion zum Anzeigen der Themen
 function displayThemes() {
     const themesSection = document.querySelector("#themes");
     const uniqueThemes = [...new Set(data.map(item => item.thema))];
@@ -204,9 +109,7 @@ function displayThemes() {
     `;
 }
 
-// Funktion zum Anzeigen der Parteien für ein bestimmtes Thema
 function showPartiesForTheme(theme) {
-    logThemeView(theme);
     const themesSection = document.querySelector("#themes");
     const filteredData = data.filter(item => item.thema === theme);
   
@@ -216,7 +119,7 @@ function showPartiesForTheme(theme) {
           ${filteredData.map(item => `
               <div class="card">
                   <h3>${item.partei}</h3>
-                  <p class="position">${item.position}</p> <!-- Hier bleibt es unverändert -->
+                  <p class="position">${item.position}</p> 
               </div>
           `).join('')}
       </div>
